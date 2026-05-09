@@ -606,6 +606,93 @@
   .hero-cta    { animation: fadeUp 0.6s 0.4s ease both; }
   .stats-card  { animation: fadeUp 0.6s 0.2s ease both; }
 
+  /* THINKING / WRITING */
+  .thinking-section {
+    border-top: 1px solid var(--border);
+    padding: 100px 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .essay {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .essay-meta {
+    position: sticky;
+    top: 100px;
+  }
+
+  .essay-date {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .essay-title {
+    font-family: var(--serif);
+    font-size: 22px;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+
+  .essay-tag {
+    font-size: 10px;
+    color: var(--accent);
+    background: rgba(200, 255, 87, 0.06);
+    border: 1px solid rgba(200, 255, 87, 0.2);
+    padding: 4px 10px;
+    border-radius: 2px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: inline-block;
+  }
+
+  .essay-body {
+    border-left: 1px solid var(--border);
+    padding-left: 80px;
+  }
+
+  .essay-body p {
+    font-family: var(--mono);
+    font-size: 14px;
+    color: #8a847c;
+    line-height: 1.9;
+    margin-bottom: 24px;
+    max-width: 600px;
+  }
+
+  .essay-body p strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  .essay-body p em {
+    font-style: italic;
+    color: #aaa49c;
+  }
+
+  .essay-pullquote {
+    border-left: 2px solid var(--accent);
+    padding: 16px 0 16px 24px;
+    margin: 32px 0;
+    max-width: 560px;
+  }
+
+  .essay-pullquote p {
+    font-family: var(--serif) !important;
+    font-size: 20px !important;
+    color: var(--text) !important;
+    line-height: 1.5 !important;
+    margin-bottom: 0 !important;
+  }
+
   /* RESPONSIVE */
   @media (max-width: 900px) {
     nav { padding: 16px 24px; }
@@ -620,6 +707,10 @@
     .contact-section { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
     footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
     .nav-links { display: none; }
+    .thinking-section { padding: 60px 24px; }
+    .essay { grid-template-columns: 1fr; gap: 32px; }
+    .essay-meta { position: static; }
+    .essay-body { border-left: none; padding-left: 0; border-top: 1px solid var(--border); padding-top: 32px; }
   }
 </style>
 </head>
@@ -629,6 +720,7 @@
   <a href="#" class="nav-logo">DZ<span>.</span></a>
   <ul class="nav-links">
     <li><a href="#projects">Projects</a></li>
+    <li><a href="#thinking">Thinking</a></li>
     <li><a href="#skills">Stack</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -661,16 +753,16 @@
           <div class="stat-sub">Chrome Web Store · Live</div>
         </div>
         <div>
-          <div class="stat-value green">69</div>
+          <div class="stat-value green">77</div>
         </div>
       </div>
       <div class="stat-row">
         <div>
-          <div class="stat-label">Store Impressions</div>
-          <div class="stat-sub">Past 30 days</div>
+          <div class="stat-label">Weekly Active Users</div>
+          <div class="stat-sub">Real usage, not just installs</div>
         </div>
         <div>
-          <div class="stat-value">451</div>
+          <div class="stat-value">41</div>
         </div>
       </div>
       <div class="stat-row">
@@ -684,11 +776,11 @@
       </div>
       <div class="stat-row">
         <div>
-          <div class="stat-label">Projects Shipped</div>
-          <div class="stat-sub">With real users</div>
+          <div class="stat-label">Store Impressions</div>
+          <div class="stat-sub">Past 30 days · growing</div>
         </div>
         <div>
-          <div class="stat-value">2</div>
+          <div class="stat-value">547</div>
         </div>
       </div>
     </div>
@@ -705,14 +797,14 @@
   <div class="projects-grid">
     <div class="project-card" data-index="01">
       <span class="project-tag">Chrome Extension · Live</span>
-      <h3 class="project-name">Save AI Chats to<br>Google Docs</h3>
+      <h3 class="project-name">ChatGPT to Google Docs<br><span style="font-size:0.75em; color: var(--muted);">Export Gemini & Claude</span></h3>
       <p class="project-desc">
-        One-click export from ChatGPT, Claude, and Gemini to Google Docs. Preserves equations, tables, code blocks, and formatting — no copy-paste cleanup. Built and iterated through 4 major versions.
+        One-click export from ChatGPT, Claude, and Gemini to Google Docs. Preserves equations, tables, code blocks, and formatting — no copy-paste cleanup. Iterated through 4 versions in under 3 weeks based on real user feedback.
       </p>
       <div class="project-meta">
         <span class="meta-chip">Chrome Extension MV3</span>
         <span class="meta-chip">Google Drive API</span>
-        <span class="meta-chip">69 users</span>
+        <span class="meta-chip">77 installs · 41 weekly users</span>
       </div>
       <a href="https://chromewebstore.google.com/detail/ilhglkmnbngkjeejpnlgfdkikmcafedd" target="_blank" class="project-link">
         View on Chrome Web Store →
@@ -762,10 +854,55 @@
   </div>
 </section>
 
+<!-- THINKING -->
+<div class="thinking-section" id="thinking">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">How I <em>think</em></h2>
+  </div>
+
+  <div class="essay">
+    <div class="essay-meta">
+      <div class="essay-date">May 2026</div>
+      <h3 class="essay-title">I think I notice problems more now</h3>
+      <span class="essay-tag">Origin Story</span>
+      <div style="margin-top: 24px; padding: 16px; border: 1px solid var(--border); border-radius: 2px;">
+        <div style="font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">As featured in</div>
+        <div style="font-size: 13px; color: var(--text); line-height: 1.5;">Lakefield College School<br><span style="color: var(--muted); font-size: 12px;">AI in Action series · 2026</span></div>
+      </div>
+    </div>
+    <div class="essay-body">
+      <p>
+        Both of my projects started the same way: I noticed friction that everyone around me had quietly accepted as just the way things are.
+      </p>
+      <p>
+        The laundry app came from a familiar boarding school situation. Students in residence had no way to know whether a machine was free, who was using it, or when a load would finish. Clothes would appear outside machines mid-cycle with no explanation. Nobody was being malicious — there was just no system. <strong>"I noticed there was an existing problem in our residence. The laundry was always busy, and you didn't know whose clothes were in the machine. I felt like there was something that needed to be fixed."</strong>
+      </p>
+      <p>
+        I built a reservation app. Students could book time and see machine status in real time. The friction disappeared. And something shifted in how I saw problems. <em>"During the process, I learned a lot, and I helped people. It felt like an all-win situation."</em>
+      </p>
+
+      <div class="essay-pullquote">
+        <p>"After I finished that project, I thought — this is so useful. I created something I never thought possible."</p>
+      </div>
+
+      <p>
+        The Chrome extension came from a teacher. Ms. Nichols, our Math and CS department head, was frustrated: every time she copied equations from ChatGPT or Claude into Google Docs, the formatting broke. She was paying for a tool to handle this. I looked at what she was paying for and thought it seemed like something I could build.
+      </p>
+      <p>
+        The first version took about ten hours — not just asking AI to write code, but understanding why formulas were breaking in the first place. <strong>"Every language model has a different way of outputting math equations. I had to identify the format, test what worked, and then keep improving it."</strong> The extension is now on version 4, supporting equations, chemical formulas, images, charts, and full conversation exports across ChatGPT, Claude, and Gemini. 77 installs. 41 weekly active users.
+      </p>
+      <p>
+        Both projects taught me the same thing: <em>"Before, I might think there isn't a solution, so I'll just go to someone else. Now I think there must be a solution, and I can find it."</em> The problems worth solving aren't the ones people complain about. They're the ones people have stopped complaining about — because they've forgotten a better version is possible.
+      </p>
+    </div>
+  </div>
+</div>
+
 <!-- SKILLS -->
 <section id="skills">
   <div class="section-header">
-    <span class="section-num">03</span>
+    <span class="section-num">05</span>
     <h2 class="section-title">My <em>stack</em></h2>
   </div>
   <div class="skills-grid">
@@ -773,20 +910,20 @@
       <div class="skill-category">Extension Dev</div>
       <div class="skill-items">
         <span class="skill-item">Chrome MV3</span>
-        <span class="skill-item">Google APIs</span>
+        <span class="skill-item">Google Drive API</span>
         <span class="skill-item">OAuth 2.0</span>
         <span class="skill-item">Content Scripts</span>
         <span class="skill-item">Service Workers</span>
       </div>
     </div>
     <div class="skill-block">
-      <div class="skill-category">AI & Automation</div>
+      <div class="skill-category">AI-Assisted Building</div>
       <div class="skill-items">
         <span class="skill-item">LLM APIs</span>
-        <span class="skill-item">N8N</span>
-        <span class="skill-item">Prompt Engineering</span>
-        <span class="skill-item">Workflow Design</span>
+        <span class="skill-item">N8N Automation</span>
         <span class="skill-item">Vibe Coding</span>
+        <span class="skill-item">Prompt Engineering</span>
+        <span class="skill-item">Rapid Iteration</span>
       </div>
     </div>
     <div class="skill-block">
@@ -795,8 +932,8 @@
         <span class="skill-item">JavaScript</span>
         <span class="skill-item">HTML / CSS</span>
         <span class="skill-item">Git / GitHub</span>
-        <span class="skill-item">Docker</span>
-        <span class="skill-item">Raspberry Pi</span>
+        <span class="skill-item">Full-stack Web</span>
+        <span class="skill-item">IoT (learning)</span>
       </div>
     </div>
   </div>
