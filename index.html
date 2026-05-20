@@ -6,6 +6,17 @@
 <title>Daniel Zeyuli — Builder</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script>
+  /* ══════════════════════════════════════════════════════════════
+     METRICS — 更新这里的数字，页面所有显示会自动同步
+     ══════════════════════════════════════════════════════════════ */
+  const METRICS = {
+    totalInstalls:     168,
+    weeklyActiveUsers:  77,
+    weeklyRetention:   '46%',
+    lastUpdated:       'May 19, 2026',
+  };
+</script>
 <style>
   :root {
     --bg: #0a0a0a;
@@ -225,7 +236,7 @@
   }
 
   .stats-card::before {
-    content: 'LIVE STATS';
+    content: 'LIVE METRICS';
     position: absolute;
     top: -10px;
     left: 20px;
@@ -266,6 +277,22 @@
     font-size: 10px;
     color: var(--muted);
     margin-top: 2px;
+  }
+
+  .stat-updated {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  .stat-updated span {
+    color: var(--text);
   }
 
   /* GRID LINE DECORATION */
@@ -749,40 +776,32 @@
     <div class="stats-card">
       <div class="stat-row">
         <div>
-          <div class="stat-label">Extension Installs</div>
-          <div class="stat-sub">Chrome Web Store · Live</div>
+          <div class="stat-label">Total Installs</div>
+          <div class="stat-sub">Chrome Web Store · All time</div>
         </div>
         <div>
-          <div class="stat-value green">97</div>
+          <div class="stat-value green" id="m-installs">168</div>
         </div>
       </div>
       <div class="stat-row">
         <div>
           <div class="stat-label">Weekly Active Users</div>
-          <div class="stat-sub">Real usage, not just installs</div>
+          <div class="stat-sub">7-day rolling average</div>
         </div>
         <div>
-          <div class="stat-value">46</div>
+          <div class="stat-value" id="m-wau">77</div>
         </div>
       </div>
       <div class="stat-row">
         <div>
-          <div class="stat-label">Install Conversion</div>
-          <div class="stat-sub">Page view → Install</div>
+          <div class="stat-label">Weekly Retention</div>
+          <div class="stat-sub">Users returning each week</div>
         </div>
         <div>
-          <div class="stat-value orange">48%</div>
+          <div class="stat-value orange" id="m-retention">46%</div>
         </div>
       </div>
-      <div class="stat-row">
-        <div>
-          <div class="stat-label">Store Impressions</div>
-          <div class="stat-sub">Past 30 days · growing</div>
-        </div>
-        <div>
-          <div class="stat-value">547</div>
-        </div>
-      </div>
+      <div class="stat-updated">Last updated: <span id="m-last-updated">May 19, 2026</span></div>
     </div>
   </div>
 </div>
@@ -804,7 +823,7 @@
       <div class="project-meta">
         <span class="meta-chip">Chrome Extension MV3</span>
         <span class="meta-chip">Google Drive API</span>
-        <span class="meta-chip">97 installs · 46 weekly users</span>
+        <span class="meta-chip" id="m-chip-installs">168 installs</span>
       </div>
       <a href="https://chromewebstore.google.com/detail/ilhglkmnbngkjeejpnlgfdkikmcafedd" target="_blank" class="project-link">
         View on Chrome Web Store →
@@ -986,6 +1005,14 @@
     <span>Open to collaboration</span>
   </div>
 </footer>
+
+<script>
+  document.getElementById('m-installs').textContent      = METRICS.totalInstalls;
+  document.getElementById('m-wau').textContent           = METRICS.weeklyActiveUsers;
+  document.getElementById('m-retention').textContent     = METRICS.weeklyRetention;
+  document.getElementById('m-last-updated').textContent  = METRICS.lastUpdated;
+  document.getElementById('m-chip-installs').textContent = METRICS.totalInstalls + ' installs';
+</script>
 
 </body>
 </html>
