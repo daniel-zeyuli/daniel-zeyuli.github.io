@@ -11,10 +11,10 @@
      METRICS — 更新这里的数字，页面所有显示会自动同步
      ══════════════════════════════════════════════════════════════ */
   const METRICS = {
-    totalInstalls:     192,
-    weeklyActiveUsers:  113,
-    weeklyRetention:   '80%',
-    lastUpdated:       'May 24, 2026',
+    totalInstalls:     219,
+    weeklyActiveUsers:  131,
+    wauGrowth:         '+30%',
+    lastUpdated:       'May 27, 2026',
   };
 </script>
 <style>
@@ -780,7 +780,7 @@
           <div class="stat-sub">Chrome Web Store · All time</div>
         </div>
         <div>
-          <div class="stat-value green" id="m-installs">192</div>
+          <div class="stat-value green" id="m-installs">219</div>
         </div>
       </div>
       <div class="stat-row">
@@ -789,16 +789,16 @@
           <div class="stat-sub">7-day rolling average</div>
         </div>
         <div>
-          <div class="stat-value" id="m-wau">77</div>
+          <div class="stat-value" id="m-wau">131</div>
         </div>
       </div>
       <div class="stat-row">
         <div>
-          <div class="stat-label">Weekly Retention</div>
+          <div class="stat-label">WAU Growth (this week)</div>
           <div class="stat-sub">Users returning each week</div>
         </div>
         <div>
-          <div class="stat-value orange" id="m-retention">46%</div>
+          <div class="stat-value orange" id="m-retention">+30%</div>
         </div>
       </div>
       <div class="stat-updated">Last updated: <span id="m-last-updated">May 19, 2026</span></div>
@@ -823,7 +823,7 @@
       <div class="project-meta">
         <span class="meta-chip">Chrome Extension MV3</span>
         <span class="meta-chip">Google Drive API</span>
-        <span class="meta-chip" id="m-chip-installs">192 installs</span>
+        <span class="meta-chip" id="m-chip-installs">219 installs</span>
       </div>
       <a href="https://chromewebstore.google.com/detail/ilhglkmnbngkjeejpnlgfdkikmcafedd" target="_blank" class="project-link">
         View on Chrome Web Store →
@@ -1009,7 +1009,7 @@
 <script>
   document.getElementById('m-installs').textContent      = METRICS.totalInstalls;
   document.getElementById('m-wau').textContent           = METRICS.weeklyActiveUsers;
-  document.getElementById('m-retention').textContent     = METRICS.weeklyRetention;
+  document.getElementById('m-retention').textContent     = METRICS.wauGrowth;
   document.getElementById('m-last-updated').textContent  = METRICS.lastUpdated;
   document.getElementById('m-chip-installs').textContent = METRICS.totalInstalls + ' installs';
 </script>
