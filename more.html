@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daniel Zeyuli — more about me</title>
+<meta name="description" content="The longer version: what Daniel Zeyuli has built, taught, competed in and studied, and the story behind it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#050505;--ink:#f2f2f2;--flower:#e23b2e;--display:'Anton','Arial Narrow',Impact,sans-serif;--text:'Instrument Sans','Helvetica Neue',Arial,sans-serif;--serif:'Instrument Serif',Georgia,serif}
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);font-family:var(--text);font-size:16px;line-height:1.5;overflow-x:hidden}
+  a{color:inherit;text-underline-offset:3px}
+  a:focus-visible{outline:2px solid var(--flower);outline-offset:3px}
+  .track{height:1000vh}
+  .pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+  canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+  #scene{mix-blend-mode:screen}
+  .stars{position:absolute;inset:0 -6%;will-change:transform}
+  .stars video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .fade{height:45vh;background:linear-gradient(#050505,#e9e9e9)}
+  .cap img{display:block;width:150px;margin:12px 0 0;border:4px solid #f2f2f2}
+  .giant{position:absolute;left:0;right:0;top:9%;text-align:center;font-family:var(--display);font-size:17.5vw;line-height:.9;white-space:nowrap;text-transform:uppercase;opacity:0;
+    -webkit-mask-image:linear-gradient(180deg,#000 30%,transparent 105%);mask-image:linear-gradient(180deg,#000 30%,transparent 105%)}
+  .giant.num{font-size:26vw;top:6%}
+  .cap{position:absolute;width:min(400px,calc(100% - 32px));opacity:0;bottom:9%}
+  .cap.l{left:max(16px,4vw)} .cap.r{right:max(16px,4vw)}
+  .cap .k{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin:0 0 10px}
+  .cap .k span{opacity:.65}
+  .cap .k img{display:block;height:30px;width:auto;margin:0;border:0;border-radius:6px;flex:none}
+  .cap h2{font-size:clamp(22px,2.4vw,32px);line-height:1.12;font-weight:500;margin:0 0 10px;letter-spacing:-.015em;text-wrap:balance}
+  .cap p{margin:0 0 8px;opacity:.78}
+  .cap ul{margin:8px 0 0;padding:0;list-style:none;display:grid;gap:5px;font-size:15px}
+  .cap li{display:grid;grid-template-columns:auto 1fr;gap:10px;opacity:.86}
+  .cap li b{font-variant-numeric:tabular-nums;font-weight:600;min-width:74px}
+  .bar{position:absolute;left:0;right:0;top:0;display:flex;justify-content:space-between;gap:12px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:18px max(16px,4vw) 0;z-index:3}
+  .bar a{text-decoration:none}
+  .bar button{font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit;background:none;border:1px solid rgba(242,242,242,.35);border-radius:999px;padding:3px 10px;cursor:pointer}
+  .bar button:focus-visible{outline:2px solid var(--flower);outline-offset:3px}
+  .hint{position:absolute;left:0;right:0;bottom:18px;text-align:center;font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.6;pointer-events:none}
+  .hint svg{display:block;margin:8px auto 0;animation:bob 1.8s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(7px)}}
+  @media (prefers-reduced-motion:reduce){.hint svg{animation:none}}
+  .story{background:#e9e9e9;color:#111;padding:clamp(48px,8vw,110px) max(16px,6vw)}
+  .story .in{max-width:680px;margin:0 auto}
+  .story h2{font-family:var(--serif);font-weight:400;font-size:clamp(34px,5vw,60px);line-height:1.02;margin:0 0 6px;letter-spacing:-.01em}
+  .story .meta{font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.6;margin:0 0 28px}
+  .story p{font-size:18px;line-height:1.62;margin:0 0 18px}
+  .story blockquote{font-family:var(--serif);font-style:italic;font-size:clamp(24px,3vw,32px);line-height:1.25;margin:30px 0;padding-left:18px;border-left:3px solid var(--flower)}
+  .story h3{font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin:48px 0 12px;opacity:.6}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chips span{border:1px solid rgba(0,0,0,.22);border-radius:999px;padding:4px 12px;font-size:14px}
+  .contact{display:grid;gap:6px;font-size:18px}
+  @media (max-width:700px){.giant{font-size:25vw;white-space:normal;top:11%}.giant.num{font-size:34vw}.cap.l,.cap.r{left:16px;right:auto;bottom:7%}.cap h2{font-size:21px}.cap ul{font-size:14px}}
+</style>
+</head>
+<body>
+<div class="track"><div class="pin">
+  <div class="stars" id="stars" aria-hidden="true"><video src="assets/space/stars.mp4" muted loop autoplay playsinline preload="auto"></video><video src="assets/space/stars.mp4" muted loop autoplay playsinline preload="auto"></video></div>
+  <canvas id="met" aria-hidden="true"></canvas>
+  <div class="giant" data-a="0" data-b="0.08">Daniel Zeyuli</div>
+  <div class="giant num" data-a="0.11" data-b="0.22">1,000+</div>
+  <div class="giant num" data-a="0.25" data-b="0.34">30→1</div>
+  <div class="giant" data-a="0.37" data-b="0.46">Teach it</div>
+  <div class="giant" data-a="0.49" data-b="0.58">Compete</div>
+  <div class="giant" data-a="0.61" data-b="0.70">Rotman</div>
+  <div class="giant" data-a="0.73" data-b="0.81">Class of 26</div>
+  <div class="giant" data-a="0.85" data-b="1.1">Keep going</div>
+  <canvas id="scene" aria-label="A seed on a small planet grows into a red flower as the page scrolls"></canvas>
+  <div class="bar"><a href="./">← Walk with Xiao Huangdou</a><span><button id="auto" type="button" aria-pressed="true">Auto ❚❚</button></span></div>
+
+  <div class="cap l" data-a="0" data-b="0.08"><p class="k"><span>The longer version</span></p><h2>I notice friction nobody else cares about, and ship fixes.</h2><p>Builder in Toronto, studying Commerce at Rotman. Scroll: everything below grew from something small.</p></div>
+
+  <div class="cap r" data-a="0.11" data-b="0.22"><p class="k"><img src="assets/logos/ace.png" alt="AI Chat Exporter icon"><span>AI Chat Exporter · founder · Apr 2026 – now</span></p><h2>One click from an AI reply to a real document.</h2>
+    <ul><li><b>May</b>167 installs, ~100 weekly users</li><li><b>Sep</b>1,370 installs, ~800 weekly users</li><li><b>Oct</b>1,640 installs, 944 weekly users</li><li><b>Nov</b>2,000+ installs, 1,000+ weekly users, 4.6★</li><li><b>186K</b>store impressions, all organic</li><li><b>Stack</b>plain JavaScript, Manifest V3, no dependencies, my own LaTeX converter</li></ul></div>
+
+  <div class="cap l" data-a="0.25" data-b="0.34"><p class="k"><span>Residence laundry booking · Dec 2025 – Jun 2026</span></p><h2>From about 30 minutes to about 1 minute per booking.</h2>
+    <p>30 residents shared 2 machines by lining up and guessing. I mapped how it really worked, then replaced it with a QR-code booking page: live status, time remaining, upcoming bookings.</p><ul><li><b>~60</b>bookings a week</li></ul></div>
+
+  <div class="cap r" data-a="0.37" data-b="0.46"><p class="k"><img src="assets/logos/lcs.png" alt="Lakefield College School" onerror="this.remove()"><span>AI Club · senior in charge · 2025 – 2026</span></p><h2>Showing people how to use AI well.</h2>
+    <ul><li><b>5+</b>hands-on workshops for 10+ students</li><li><b>Grade 9</b>taught a class with no coding experience to build games with AI tools</li><li><b>School</b>co-organized a school-wide vibe-coding competition with faculty</li></ul></div>
+
+  <div class="cap l" data-a="0.49" data-b="0.58"><p class="k"><span>Competitions and research</span></p><h2>Building under a deadline, and defending it.</h2>
+    <ul><li><b>2026</b>RCIG × OpenAI Student Collective Promptathon: 3rd place, team. We built RCI-GO, a closing-time brief for a one-person food truck</li><li><b>2025</b>Paper on Disney's yen financing problem, accepted at GBEC 2025</li><li><b>2024</b>iGEM, Paris: represented the business side; gold for the business section, silver overall</li></ul><img src="assets/photos/promptathon.jpg" alt="Daniel and a teammate in front of the Promptathon winners screen" loading="lazy"></div>
+
+  <div class="cap r" data-a="0.61" data-b="0.70"><p class="k"><img src="assets/logos/rc.png" alt="Rotman Commerce" onerror="this.remove()"><span>Rotman Commerce · University of Toronto · 2026 –</span></p><h2>Learning how businesses decide.</h2>
+    <ul><li><b>RCCA</b>researcher on a six-week client project: how a tutoring company can respond to AI tutors</li><li><b>RCIG</b>nine-week consulting bootcamp for a financial services client</li><li><b>MCAP</b>selected for the consulting accelerator program</li><li><b>House</b>first-year finance lead, Galbraith House</li></ul></div>
+
+  <div class="cap l" data-a="0.73" data-b="0.81"><p class="k"><img src="assets/logos/lcs.png" alt="Lakefield College School" onerror="this.remove()"><span>Lakefield College School · 2022 – 2026</span></p><h2>Recognition.</h2>
+    <ul><li><b>2026</b>John Pearman Martyn Sibbald Prize, for an outstanding all-round graduating student</li><li><b>9–11</b>Scholar with Distinction</li></ul></div>
+
+  <div class="cap r" data-a="0.85" data-b="1.1"><p class="k"><span>Below</span></p><h2>The story behind the first two projects, in my own words.</h2><p>Keep scrolling.</p></div>
+  <div class="hint" id="hint">Scroll<svg width="18" height="26" viewBox="0 0 18 26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2v21M2 16l7 7 7-7"/></svg></div>
+</div></div>
+
+<div class="fade"></div>
+<section class="story"><div class="in">
+  <p class="meta">May 2026 · as featured in Lakefield College School's AI in Action series</p>
+  <h2>I think I notice problems more now</h2>
+  <div style="height:18px"></div>
+  <p>
+      Both of my projects started the same way: I noticed friction that everyone around me had quietly accepted as just the way things are.
+      </p>
+      <p>
+      The laundry app came from a familiar boarding school situation. Students in residence had no way to know whether a machine was free, who was using it, or when a load would finish. Clothes would appear outside machines mid-cycle with no explanation. Nobody was being malicious — there was just no system. <strong>"I noticed there was an existing problem in our residence. The laundry was always busy, and you didn't know whose clothes were in the machine. I felt like there was something that needed to be fixed."</strong>
+      </p>
+      <p>
+      I built a reservation app. Students could book time and see machine status in real time. The friction disappeared. And something shifted in how I saw problems. <em>"During the process, I learned a lot, and I helped people. It felt like an all-win situation."</em>
+      </p>
+      <blockquote>"After I finished that project, I thought — this is so useful. I created something I never thought possible."</blockquote>
+      <p>
+      The Chrome extension came from a teacher. Ms. Nichols, our Math and CS department head, was frustrated: every time she copied equations from ChatGPT or Claude into Google Docs, the formatting broke. She was paying for a tool to handle this. I looked at what she was paying for and thought it seemed like something I could build.
+      </p>
+      <p>
+      The first version took about ten hours — not just asking AI to write code, but understanding why formulas were breaking in the first place. <strong>"Every language model has a different way of outputting math equations. I had to identify the format, test what worked, and then keep improving it."</strong> The extension is now on version 4, supporting equations, chemical formulas, images, charts, and full conversation exports across ChatGPT, Claude, Gemini, DeepSeek and Perplexity. 2,000+ installs. 1,000+ weekly users.
+      </p>
+      <p>
+      Both projects taught me the same thing: <em>"Before, I might think there isn't a solution, so I'll just go to someone else. Now I think there must be a solution, and I can find it."</em> The problems worth solving aren't the ones people complain about. They're the ones people have stopped complaining about — because they've forgotten a better version is possible.
+      </p>
+  <h3>What I work with</h3>
+  <div class="chips"><span>Claude Code</span><span>JavaScript</span><span>Chrome MV3</span><span>Google Drive API</span><span>OAuth 2.0</span><span>HTML / CSS</span><span>Notion & Docs integrations</span><span>Process mapping</span><span>User research</span><span>English</span><span>Mandarin</span></div>
+  <h3>Say hello</h3>
+  <div class="contact"><a href="mailto:daniel.zeyuli@gmail.com">daniel.zeyuli@gmail.com</a><a href="https://github.com/daniel-zeyuli" target="_blank" rel="noopener">github.com/daniel-zeyuli</a><a href="https://www.linkedin.com/in/daniel-zeyuli" target="_blank" rel="noopener">linkedin.com/in/daniel-zeyuli</a><a href="https://chromewebstore.google.com/detail/ilhglkmnbngkjeejpnlgfdkikmcafedd" target="_blank" rel="noopener">AI Chat Exporter on the Chrome Web Store</a><a href="./">← Back to the walk with Xiao Huangdou</a></div>
+</div></section>
+
+<script>
+const cv = document.getElementById('scene'), ctx = cv.getContext('2d'), root = document.documentElement, track = document.querySelector('.track');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const faders = [...document.querySelectorAll('[data-a]')].map(el => ({ el, a: +el.dataset.a, b: +el.dataset.b }));
+const hint = document.getElementById('hint'), stars = document.getElementById('stars');
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const ease = x => { x = clamp(x); return x * x * (3 - 2 * x); };
+const qs = new URLSearchParams(location.search), dbg = qs.get('p');
+let W = 0, H = 0, dpr = 1, target = 0, p = 0;
+function resize(){ dpr = Math.min(devicePixelRatio || 1, 2); W = cv.clientWidth; H = cv.clientHeight; cv.width = mc.width = W * dpr; cv.height = mc.height = H * dpr; }
+function readScroll(){ if (dbg !== null){ target = clamp(+dbg); return; } const max = track.offsetHeight - innerHeight; target = max > 0 ? clamp(scrollY / max) : 0; }
+
+// The plant: frames from two generated clips. Clip one runs up to frame `join`, clip two takes over from there; the last few frames before it cross-fade.
+const FR = { count: 86, join: 26 };   // kept inline: a fetch() for this fails when the page is opened straight from disk
+FR.imgs = Array.from({ length: FR.count }, (_, i) => { const im = new Image(); im.src = 'assets/seed/f_' + String(i).padStart(3, '0') + '.webp'; return im; });
+function blit(i, alpha){ let im = FR.imgs[i]; while (i > 0 && !(im.complete && im.naturalWidth)) im = FR.imgs[--i];
+  if (!(im.complete && im.naturalWidth)) return; const sc = Math.max(W / im.naturalWidth, H / im.naturalHeight), w = im.naturalWidth * sc, h = im.naturalHeight * sc;
+  ctx.globalAlpha = alpha; ctx.drawImage(im, (W - w) / 2, H - h, w, h); ctx.globalAlpha = 1; }
+
+// The star clip is played twice, half a loop apart; the second copy covers the first one's loop point.
+const [sa, sb] = stars.querySelectorAll('video');
+function seam(){ const D = sa.duration; if (!D || !sb.duration) return;
+  const o = 1 - ease((Math.min(sa.currentTime, D - sa.currentTime) - .25) / .8); sb.style.opacity = o.toFixed(3);
+  if (o === 0){ const want = (sa.currentTime + D / 2) % D, off = Math.abs(sb.currentTime - want); if (Math.min(off, D - off) > .3) sb.currentTime = want; } }
+const mc = document.getElementById('met'), mx = mc.getContext('2d'); let met = null, nextMet = 2500;
+function meteors(t){
+  if (reduce) return;
+  if (!met && (t > nextMet || qs.has('m'))){ const a = Math.PI * (.62 + Math.random() * .2);
+    met = { x: W * (.25 + Math.random() * .7), y: H * Math.random() * .35, vx: Math.cos(a), vy: Math.sin(a), t0: t, life: 600 + Math.random() * 500, len: 140 + Math.random() * 160 }; }
+  if (!met) return;
+  const k = qs.has('m') ? .5 : (t - met.t0) / met.life; if (k >= 1){ met = null; nextMet = t + 3500 + Math.random() * 7000; return; }
+  const dist = k * Math.min(W, H) * .55, hx = met.x + met.vx * dist, hy = met.y + met.vy * dist, al = Math.sin(k * Math.PI);
+  const g = mx.createLinearGradient(hx, hy, hx - met.vx * met.len, hy - met.vy * met.len); g.addColorStop(0, `rgba(255,255,255,${(.9 * al).toFixed(3)})`); g.addColorStop(1, 'rgba(255,255,255,0)');
+  mx.strokeStyle = g; mx.lineWidth = 1.6; mx.lineCap = 'round'; mx.beginPath(); mx.moveTo(hx, hy); mx.lineTo(hx - met.vx * met.len, hy - met.vy * met.len); mx.stroke();
+}
+function draw(){
+  stars.style.transform = `translate3d(${(-p * 5).toFixed(2)}%,0,0)`;
+  for (const f of faders){ const o = Math.min(ease((p - f.a) / .03), ease((f.b - p) / .03));
+    f.el.style.opacity = f.el.classList.contains('giant') ? (o * .16).toFixed(3) : o.toFixed(3); f.el.style.pointerEvents = o > .5 ? 'auto' : 'none'; }
+  hint.style.opacity = (.6 * (1 - ease(p / .04))).toFixed(2);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+  const fi = ease(p / .92) * (FR.count - 1), X = 3; blit(Math.floor(fi), 1);
+  if (fi > FR.join - X && fi < FR.join) blit(FR.join, (fi - (FR.join - X)) / X);
+}
+// Left alone, the page scrolls itself through the planet section; any input pauses it for a few seconds.
+const autoBtn = document.getElementById('auto'); let autoOn = !reduce && dbg === null, lastInput = performance.now() - 2000, ay = 0, wasAuto = false, lastT = 0;
+function setAuto(on){ autoOn = on; autoBtn.textContent = on ? 'Auto ❚❚' : 'Auto ▶'; autoBtn.setAttribute('aria-pressed', on); }
+setAuto(autoOn); autoBtn.addEventListener('click', () => setAuto(!autoOn));
+for (const ev of ['wheel', 'touchstart', 'keydown', 'pointerdown']) addEventListener(ev, () => { lastInput = performance.now(); }, { passive: true });
+function autoScroll(t){ const dt = Math.min(.1, (t - lastT) / 1000 || 0); lastT = t; const max = track.offsetHeight - innerHeight, go = autoOn && performance.now() - lastInput > 6000 && scrollY < max - 1;
+  if (go){ if (!wasAuto) ay = scrollY; ay = Math.min(max, ay + max / 60 * dt); scrollTo(0, ay); } wasAuto = go; }
+// The frames are screen-blended, so the planet's dark side would let stars through. A black disc under it blocks them.
+// Numbers are the planet's centre and radius in the 1280x724 frames.
+function planetShadow(){ const sc = Math.max(W / 1280, H / 724), ox = (W - 1280 * sc) / 2, oy = H - 724 * sc, r = 384 * sc;
+  const g = mx.createRadialGradient(ox + 621 * sc, oy + 795.6 * sc, r * .985, ox + 621 * sc, oy + 795.6 * sc, r * 1.01); g.addColorStop(0, '#000'); g.addColorStop(1, 'rgba(0,0,0,0)');
+  mx.fillStyle = g; mx.beginPath(); mx.arc(ox + 621 * sc, oy + 795.6 * sc, r * 1.01, 0, 6.3); mx.fill(); }
+function frame(t){ p = reduce ? target : p + (target - p) * .12; if (Math.abs(target - p) < .0004) p = target; seam(); mx.setTransform(dpr, 0, 0, dpr, 0, 0); mx.clearRect(0, 0, W, H); meteors(t); planetShadow(); autoScroll(t); draw(); requestAnimationFrame(frame); }
+addEventListener('scroll', readScroll, { passive: true });
+addEventListener('resize', () => { resize(); readScroll(); });
+resize(); readScroll(); p = target; requestAnimationFrame(frame);
+</script>
+</body>
+</html>

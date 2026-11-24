@@ -3,1016 +3,346 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Daniel Zeyuli — Builder</title>
+<title>Daniel Zeyuli — a walk with Xiao Huangdou</title>
+<link rel="canonical" href="https://daniel-zeyuli.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://daniel-zeyuli.github.io/">
+<meta property="og:title" content="Daniel Zeyuli — a walk with Xiao Huangdou">
+<meta property="og:description" content="I notice the small things that slow people down, and I build the fix. Take my Shiba for a walk through what I've made.">
+<meta property="og:image" content="https://daniel-zeyuli.github.io/assets/photos/hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="Daniel Zeyuli notices the small things that slow people down and builds the fix. Scroll to walk his Shiba, Xiao Huangdou, past the things he has made and the things he loves.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <script>
-  /* ══════════════════════════════════════════════════════════════
-     METRICS — 更新这里的数字，页面所有显示会自动同步
-     ══════════════════════════════════════════════════════════════ */
+  /* METRICS — 更新这里的数字，页面所有显示会自动同步 */
   const METRICS = {
-    totalInstalls:     1640,
-    weeklyActiveUsers:  944,
-    wauGrowth:         '+21%',
-    lastUpdated:       'Oct 15, 2026',
+    weeklyUsers: '1,000+',
+    laundryFrom: '30',
+    laundryTo:   '1',
+    lastUpdated: 'Nov 2026',
   };
 </script>
 <style>
-  :root {
-    --bg: #0a0a0a;
-    --surface: #111111;
-    --border: #1f1f1f;
-    --text: #e8e4dc;
-    --muted: #5a5550;
-    --accent: #c8ff57;
-    --accent2: #ff6b35;
-    --serif: 'Instrument Serif', Georgia, serif;
-    --mono: 'DM Mono', monospace;
-    --sans: 'Syne', sans-serif;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--mono);
-    font-size: 14px;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  /* NOISE TEXTURE */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1000;
-    opacity: 0.6;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
-    border-bottom: 1px solid var(--border);
-    background: rgba(10,10,10,0.85);
-    backdrop-filter: blur(12px);
-  }
-
-  .nav-logo {
-    font-family: var(--sans);
-    font-weight: 800;
-    font-size: 15px;
-    letter-spacing: 0.05em;
-    color: var(--text);
-    text-decoration: none;
-  }
-
-  .nav-logo span { color: var(--accent); }
-
-  .nav-links {
-    display: flex;
-    gap: 32px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    color: var(--muted);
-    text-decoration: none;
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--text); }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding-top: 80px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 80px 40px 80px 80px;
-    position: relative;
-  }
-
-  .hero-tag {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--accent);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 24px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .hero-tag::before {
-    content: '';
-    width: 24px;
-    height: 1px;
-    background: var(--accent);
-  }
-
-  .hero-name {
-    font-family: var(--serif);
-    font-size: clamp(52px, 6vw, 88px);
-    line-height: 1.0;
-    letter-spacing: -0.02em;
-    color: var(--text);
-    margin-bottom: 8px;
-  }
-
-  .hero-name em {
-    font-style: italic;
-    color: var(--accent);
-  }
-
-  .hero-title {
-    font-family: var(--sans);
-    font-size: clamp(13px, 1.5vw, 16px);
-    font-weight: 400;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 40px;
-    margin-top: 12px;
-  }
-
-  .hero-desc {
-    font-family: var(--mono);
-    font-size: 14px;
-    color: #7a756e;
-    line-height: 1.8;
-    max-width: 420px;
-    margin-bottom: 48px;
-  }
-
-  .hero-desc strong {
-    color: var(--text);
-    font-weight: 500;
-  }
-
-  .hero-cta {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.08em;
-    text-decoration: none;
-    border-radius: 2px;
-    transition: all 0.2s;
-    cursor: pointer;
-    border: none;
-  }
-
-  .btn-primary {
-    background: var(--accent);
-    color: #0a0a0a;
-    font-weight: 500;
-  }
-
-  .btn-primary:hover {
-    background: #d4ff70;
-    transform: translateY(-1px);
-  }
-
-  .btn-ghost {
-    background: transparent;
-    color: var(--muted);
-    border: 1px solid var(--border);
-  }
-
-  .btn-ghost:hover {
-    color: var(--text);
-    border-color: #333;
-  }
-
-  .hero-right {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 80px 80px 80px 40px;
-    position: relative;
-  }
-
-  /* STATS CARD */
-  .stats-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 40px;
-    width: 100%;
-    max-width: 360px;
-    position: relative;
-  }
-
-  .stats-card::before {
-    content: 'LIVE METRICS';
-    position: absolute;
-    top: -10px;
-    left: 20px;
-    background: var(--bg);
-    padding: 0 8px;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    color: var(--accent);
-  }
-
-  .stat-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .stat-row:last-child { border-bottom: none; }
-
-  .stat-label {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-  }
-
-  .stat-value {
-    font-family: var(--sans);
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--text);
-  }
-
-  .stat-value.green { color: var(--accent); }
-  .stat-value.orange { color: var(--accent2); }
-
-  .stat-sub {
-    font-size: 10px;
-    color: var(--muted);
-    margin-top: 2px;
-  }
-
-  .stat-updated {
-    font-family: var(--mono);
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-align: right;
-    margin-top: 16px;
-    padding-top: 12px;
-    border-top: 1px solid var(--border);
-  }
-
-  .stat-updated span {
-    color: var(--text);
-  }
-
-  /* GRID LINE DECORATION */
-  .hero::after {
-    content: '';
-    position: absolute;
-    right: 50%;
-    top: 80px;
-    bottom: 0;
-    width: 1px;
-    background: var(--border);
-  }
-
-  /* SECTION */
-  section {
-    padding: 100px 80px;
-    border-top: 1px solid var(--border);
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .section-header {
-    display: flex;
-    align-items: baseline;
-    gap: 20px;
-    margin-bottom: 60px;
-  }
-
-  .section-num {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-  }
-
-  .section-title {
-    font-family: var(--serif);
-    font-size: clamp(28px, 3vw, 42px);
-    color: var(--text);
-    font-weight: 400;
-  }
-
-  .section-title em {
-    font-style: italic;
-    color: var(--accent);
-  }
-
-  /* PROJECTS */
-  .projects-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2px;
-    background: var(--border);
-  }
-
-  .project-card {
-    background: var(--bg);
-    padding: 48px;
-    transition: background 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .project-card:hover { background: var(--surface); }
-
-  .project-card::before {
-    content: attr(data-index);
-    position: absolute;
-    top: 20px;
-    right: 24px;
-    font-family: var(--sans);
-    font-size: 72px;
-    font-weight: 800;
-    color: var(--border);
-    line-height: 1;
-    transition: color 0.2s;
-  }
-
-  .project-card:hover::before { color: #1a1a1a; }
-
-  .project-tag {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 16px;
-    display: block;
-  }
-
-  .project-name {
-    font-family: var(--serif);
-    font-size: 26px;
-    color: var(--text);
-    margin-bottom: 12px;
-    line-height: 1.2;
-  }
-
-  .project-desc {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.7;
-    margin-bottom: 28px;
-    max-width: 340px;
-  }
-
-  .project-meta {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-bottom: 28px;
-  }
-
-  .meta-chip {
-    font-size: 11px;
-    color: #4a4540;
-    background: #111;
-    border: 1px solid var(--border);
-    padding: 4px 10px;
-    border-radius: 2px;
-  }
-
-  .project-link {
-    font-size: 12px;
-    color: var(--text);
-    text-decoration: none;
-    letter-spacing: 0.05em;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 2px;
-    transition: border-color 0.2s, color 0.2s;
-  }
-
-  .project-link:hover {
-    color: var(--accent);
-    border-color: var(--accent);
-  }
-
-  /* SKILLS */
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    background: var(--border);
-  }
-
-  .skill-block {
-    background: var(--bg);
-    padding: 32px;
-  }
-
-  .skill-category {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 16px;
-  }
-
-  .skill-items {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-  }
-
-  .skill-item {
-    font-size: 12px;
-    color: var(--muted);
-    border: 1px solid var(--border);
-    padding: 5px 10px;
-    border-radius: 2px;
-    transition: all 0.15s;
-  }
-
-  .skill-item:hover {
-    color: var(--text);
-    border-color: #333;
-  }
-
-  /* CURRENTLY */
-  .currently-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 40px;
-  }
-
-  .current-item {
-    padding: 28px 0;
-    border-top: 1px solid var(--border);
-  }
-
-  .current-label {
-    font-size: 10px;
-    color: var(--muted);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-  }
-
-  .current-value {
-    font-family: var(--serif);
-    font-size: 18px;
-    color: var(--text);
-    line-height: 1.4;
-  }
-
-  .current-sub {
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 4px;
-  }
-
-  /* CONTACT */
-  .contact-section {
-    border-top: 1px solid var(--border);
-    padding: 100px 80px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .contact-left .contact-title {
-    font-family: var(--serif);
-    font-size: clamp(36px, 4vw, 60px);
-    line-height: 1.1;
-    margin-bottom: 20px;
-  }
-
-  .contact-left .contact-title em {
-    font-style: italic;
-    color: var(--accent);
-  }
-
-  .contact-desc {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.8;
-    max-width: 360px;
-  }
-
-  .contact-right {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 16px;
-  }
-
-  .contact-link {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 24px;
-    border: 1px solid var(--border);
-    text-decoration: none;
-    color: var(--text);
-    transition: all 0.2s;
-    border-radius: 2px;
-  }
-
-  .contact-link:hover {
-    background: var(--surface);
-    border-color: #333;
-    transform: translateX(4px);
-  }
-
-  .contact-link-label {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .contact-link-value {
-    font-size: 13px;
-    color: var(--text);
-    margin-top: 2px;
-  }
-
-  .contact-link-arrow {
-    color: var(--muted);
-    font-size: 18px;
-    transition: color 0.2s;
-  }
-
-  .contact-link:hover .contact-link-arrow {
-    color: var(--accent);
-  }
-
-  /* FOOTER */
-  footer {
-    border-top: 1px solid var(--border);
-    padding: 24px 80px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .footer-text {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.05em;
-  }
-
-  .footer-status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 11px;
-    color: var(--muted);
-  }
-
-  .status-dot {
-    width: 6px;
-    height: 6px;
-    background: var(--accent);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
-
-  /* ENTRANCE ANIMATIONS */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  .hero-tag    { animation: fadeUp 0.6s ease both; }
-  .hero-name   { animation: fadeUp 0.6s 0.1s ease both; }
-  .hero-title  { animation: fadeUp 0.6s 0.2s ease both; }
-  .hero-desc   { animation: fadeUp 0.6s 0.3s ease both; }
-  .hero-cta    { animation: fadeUp 0.6s 0.4s ease both; }
-  .stats-card  { animation: fadeUp 0.6s 0.2s ease both; }
-
-  /* THINKING / WRITING */
-  .thinking-section {
-    border-top: 1px solid var(--border);
-    padding: 100px 80px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-
-  .essay {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    gap: 80px;
-    align-items: start;
-  }
-
-  .essay-meta {
-    position: sticky;
-    top: 100px;
-  }
-
-  .essay-date {
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-
-  .essay-title {
-    font-family: var(--serif);
-    font-size: 22px;
-    color: var(--text);
-    line-height: 1.3;
-    margin-bottom: 16px;
-  }
-
-  .essay-tag {
-    font-size: 10px;
-    color: var(--accent);
-    background: rgba(200, 255, 87, 0.06);
-    border: 1px solid rgba(200, 255, 87, 0.2);
-    padding: 4px 10px;
-    border-radius: 2px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    display: inline-block;
-  }
-
-  .essay-body {
-    border-left: 1px solid var(--border);
-    padding-left: 80px;
-  }
-
-  .essay-body p {
-    font-family: var(--mono);
-    font-size: 14px;
-    color: #8a847c;
-    line-height: 1.9;
-    margin-bottom: 24px;
-    max-width: 600px;
-  }
-
-  .essay-body p strong {
-    color: var(--text);
-    font-weight: 500;
-  }
-
-  .essay-body p em {
-    font-style: italic;
-    color: #aaa49c;
-  }
-
-  .essay-pullquote {
-    border-left: 2px solid var(--accent);
-    padding: 16px 0 16px 24px;
-    margin: 32px 0;
-    max-width: 560px;
-  }
-
-  .essay-pullquote p {
-    font-family: var(--serif) !important;
-    font-size: 20px !important;
-    color: var(--text) !important;
-    line-height: 1.5 !important;
-    margin-bottom: 0 !important;
-  }
-
-  /* RESPONSIVE */
-  @media (max-width: 900px) {
-    nav { padding: 16px 24px; }
-    .hero { grid-template-columns: 1fr; min-height: auto; }
-    .hero::after { display: none; }
-    .hero-left { padding: 80px 24px 40px; }
-    .hero-right { padding: 0 24px 60px; }
-    section { padding: 60px 24px; }
-    .projects-grid { grid-template-columns: 1fr; }
-    .skills-grid { grid-template-columns: 1fr 1fr; }
-    .currently-grid { grid-template-columns: 1fr; gap: 0; }
-    .contact-section { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
-    footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
-    .nav-links { display: none; }
-    .thinking-section { padding: 60px 24px; }
-    .essay { grid-template-columns: 1fr; gap: 32px; }
-    .essay-meta { position: static; }
-    .essay-body { border-left: none; padding-left: 0; border-top: 1px solid var(--border); padding-top: 32px; }
+  :root{
+    --ink:#f7efe2; --dim:rgba(247,239,226,.76); --paper:#efe6d6; --wood:#2a1a10; --card:rgba(20,13,8,.86);
+    --accent:#e8a04a; --accent-hi:#f3c07a; --night:#0c0806;
+    --display:'Bricolage Grotesque','Helvetica Neue',Arial,sans-serif; --text:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{font-family:var(--text);color:var(--ink);background:var(--night);font-size:16px;line-height:1.5;overflow-x:hidden}
+  a{color:inherit}
+  .stage{touch-action:pan-y;position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;color:var(--ink);background:var(--night)}
+  .bg{position:absolute;inset:0;transform-origin:50% 100%;will-change:transform}
+  .bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 100%}
+  .shade{position:absolute;inset:0;pointer-events:none;background:linear-gradient(rgba(10,6,3,.55),rgba(10,6,3,.28) 45%,rgba(10,6,3,.3))}
+
+  /* exhibits: one frame family for everything on the wall */
+  .ex{position:absolute;left:0;top:0;margin:0;will-change:transform,opacity;visibility:hidden}
+  .fr{position:relative;padding:13px;border-radius:2px;background:linear-gradient(135deg,rgba(255,225,180,.16),rgba(255,225,180,0) 38%,rgba(0,0,0,.38)),url(assets/frame/wood.jpg) 0 0/auto 13px,var(--wood);
+    box-shadow:0 34px 70px rgba(0,0,0,.55),0 8px 18px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,220,170,.22),inset 0 -2px 3px rgba(0,0,0,.6)}
+  .fr::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,225,180,.1),rgba(0,0,0,.25)) left/13px 100% no-repeat,url(assets/frame/wood-v.jpg) left top/13px auto repeat-y,url(assets/frame/wood-v.jpg) right top/13px auto repeat-y}
+  .mat{position:relative;padding:14px;background:var(--paper);box-shadow:inset 0 2px 7px rgba(0,0,0,.5)}
+  .mat img,.mat svg{display:block;width:100%;height:100%;object-fit:cover;box-shadow:0 0 0 1px rgba(40,25,12,.25)}
+  .fr::after{content:"";position:absolute;inset:0;background:#0a0603;opacity:var(--dimk,0);pointer-events:none}
+  .lab{position:absolute;left:50%;top:100%;transform:translateX(-50%);margin-top:16px;white-space:nowrap;background:var(--paper);color:#2a1c12;font-size:13px;font-weight:500;letter-spacing:.01em;padding:5px 12px;
+    box-shadow:0 6px 14px rgba(0,0,0,.45);opacity:0}
+
+  .treat{position:absolute;left:0;bottom:0;width:76px;height:76px;padding:0;border:0;background:none;cursor:pointer;transition:opacity .25s;filter:drop-shadow(0 3px 3px rgba(0,0,0,.55)) drop-shadow(0 0 12px rgba(255,205,130,.55))}
+  .treat.got{opacity:0;pointer-events:none}
+  #dog{position:absolute;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .bubble{position:absolute;background:var(--paper);color:#2a1c12;border-radius:14px;padding:6px 12px;font-family:var(--display);font-weight:700;font-size:15px;opacity:0;transition:opacity .2s;pointer-events:none;white-space:nowrap}
+
+  .hud{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px max(16px,4vw);font-family:var(--display);font-weight:700;z-index:5;letter-spacing:.01em}
+  .treats{border-radius:999px;padding:4px 12px;font-size:13px;font-variant-numeric:tabular-nums;background:var(--card);font-family:var(--text);font-weight:500}
+  .card{position:absolute;left:max(16px,5vw);top:clamp(56px,9vh,96px);width:min(450px,calc(100% - 32px));opacity:0;pointer-events:none;z-index:4;
+    background:var(--card);border-radius:18px;padding:clamp(20px,2.2vw,30px);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 24px 60px rgba(0,0,0,.4)}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-hi);font-weight:600;margin:0 0 10px}
+  .big{font-family:var(--display);font-weight:800;font-size:clamp(64px,8.4vw,120px);line-height:.9;letter-spacing:-.04em;margin:0 0 8px;font-variant-numeric:tabular-nums}
+  .big small{font-size:.34em;letter-spacing:0;font-weight:700;margin-left:.2em}
+  .card h2{font-family:var(--display);font-weight:700;font-size:clamp(22px,2.3vw,31px);line-height:1.12;margin:0 0 10px;letter-spacing:-.02em;text-wrap:balance}
+  .card p{margin:0 0 12px;color:var(--dim)}
+  .card p:last-child{margin-bottom:0}
+  .card p.eyebrow{color:var(--accent-hi)}
+  .card p.big{color:var(--ink)}
+  .btn{display:inline-block;background:var(--accent);color:#1d1208;text-decoration:none;font-weight:600;border-radius:999px;padding:10px 18px;font-size:14px}
+  .btn:focus-visible,.treat:focus-visible,.links a:focus-visible{outline:2px solid var(--accent-hi);outline-offset:3px}
+  .links{display:flex;flex-direction:column;gap:5px;margin-top:10px}
+  .card.end h2{font-size:clamp(26px,2.9vw,40px)}
+  .btn.go{font-size:16px;padding:13px 24px;margin-top:4px}
+  .card.end .links{flex-direction:row;flex-wrap:wrap;gap:4px 14px;font-size:13px;margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,232,200,.16)}
+  .card.end .pols{margin-top:10px;max-width:300px}
+  .card.end .pols.all{max-width:none;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px}
+  .win .fr{display:block;padding:0;background:none;box-shadow:none;transition:transform .3s}
+  .win .fr::before,.win .fr::after,.win .lab{display:none}
+  .win .fr:hover,.win .fr:focus-visible{transform:scale(1.04)}
+  .win .mat{padding:0;background:none;box-shadow:none}
+  .win .sky{position:absolute;inset:-26% -14%;background:#000;-webkit-mask-image:radial-gradient(ellipse closest-side,#000 40%,transparent 100%);mask-image:radial-gradient(ellipse closest-side,#000 40%,transparent 100%)}
+  .win .sky video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .win .shoot{position:absolute;left:68%;top:22%;width:120px;height:1.5px;background:linear-gradient(90deg,#fff,transparent);transform:rotate(-28deg);opacity:0;animation:shoot 9s linear infinite}
+  @keyframes shoot{0%,86%{opacity:0;translate:0 0}88%{opacity:.9}96%,100%{opacity:0;translate:-170px 92px}}
+  .win .pl{position:relative;width:100%;height:100%;animation:bob 7s ease-in-out infinite}
+  .win .pl img{box-shadow:none;animation:glow 5s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(-2.2%)}}
+  @keyframes glow{50%{filter:brightness(1.14)}}
+  @media (prefers-reduced-motion:reduce){.win .pl,.win .pl img,.win .shoot{animation:none}}
+  .hudr{display:flex;align-items:center;gap:10px}
+  .p2{font-family:var(--text);font-weight:600;font-size:13px;text-decoration:none;background:var(--accent);color:#1d1208;border-radius:999px;padding:4px 12px}
+  .nav{position:absolute;top:50%;z-index:9;width:48px;height:48px;margin-top:-24px;border:0;border-radius:50%;background:var(--card);color:var(--ink);font-size:26px;line-height:1;cursor:pointer;transition:opacity .2s;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+  .nav:focus-visible,.p2:focus-visible{outline:2px solid var(--accent-hi);outline-offset:3px}
+  .nav.prev{left:14px}.nav.next{right:14px}
+  .pols{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+  .pols figure{margin:0;background:var(--paper);padding:5px 5px 14px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+  .pols img{display:block;width:100%;aspect-ratio:1;object-fit:cover}
+
+  /* opening: who this is */
+  .hero{position:absolute;inset:0;z-index:8;overflow:hidden;background:var(--night)}
+  .hero img{position:absolute;left:0;top:0;width:120%;height:100%;object-fit:cover;object-position:50% 80%;transform-origin:60% 55%;will-change:transform}
+  .hero .veil{position:absolute;inset:0;background:var(--night);opacity:0}
+  .hero .scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,5,3,.9) 0%,rgba(8,5,3,.62) 30%,rgba(8,5,3,0) 58%),linear-gradient(0deg,rgba(8,5,3,.7) 0%,rgba(8,5,3,0) 30%)}
+  .hero .txt{position:absolute;left:max(20px,6vw);top:50%;transform:translateY(-50%);width:min(560px,calc(100% - 40px))}
+  .hero .eyebrow{color:var(--accent-hi);margin-bottom:18px}
+  .hero h1{font-family:var(--display);font-weight:800;font-size:clamp(54px,7.6vw,124px);line-height:.92;letter-spacing:-.04em;margin:0 0 22px}
+  .hero .lead{font-family:var(--display);font-weight:500;font-size:clamp(20px,2.1vw,30px);line-height:1.2;letter-spacing:-.01em;margin:0 0 20px;text-wrap:balance}
+  .hero .bio{font-size:clamp(15px,1.15vw,17px);line-height:1.6;color:var(--dim);margin:0;max-width:48ch}
+  .hero .go{position:absolute;left:max(20px,6vw);bottom:28px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+  @media (max-width:760px){
+    .hero img{width:100%;object-position:50% 50%}
+    .hero .scrim{background:linear-gradient(0deg,rgba(8,5,3,.94) 0%,rgba(8,5,3,.7) 42%,rgba(8,5,3,0) 72%)}
+    .hero .txt{top:auto;bottom:64px;transform:none}
+    .hero h1{margin-bottom:14px}.hero .lead{margin-bottom:12px}
+    .card{top:46svh;padding:16px}.card p{font-size:14px;margin-bottom:8px}.big{font-size:54px}.card h2{font-size:20px}
+    .nav{width:40px;height:40px;margin-top:-20px;font-size:22px}
+    .lab{font-size:12px}
   }
 </style>
 </head>
 <body>
+<div class="track" id="track"><div class="stage" id="stage">
+  <div class="bg"><video src="assets/bg/spring.mp4" muted loop autoplay playsinline preload="auto"></video><video src="assets/bg/spring.mp4" muted loop autoplay playsinline preload="auto"></video></div>
+  <div class="bg" id="bgwinter"><video src="assets/bg/winter.mp4" muted loop autoplay playsinline preload="auto"></video><video src="assets/bg/winter.mp4" muted loop autoplay playsinline preload="auto"></video></div>
+  <div class="shade"></div>
 
-<nav>
-  <a href="#" class="nav-logo">DL<span>.</span></a>
-  <ul class="nav-links">
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#thinking">Thinking</a></li>
-    <li><a href="#skills">Stack</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-</nav>
+  <!-- The wall. Order here is the order of the walk; data-g ties an exhibit to its text card, data-a is width/height. -->
+  <figure class="ex" data-g="dog" data-a="0.749"><div class="fr"><div class="mat"><img src="assets/photos/d1.jpg" alt="Xiao Huangdou sitting with his tongue out"></div></div><figcaption class="lab">Xiao Huangdou (小黄豆), literally "little yellow bean"</figcaption></figure>
+  <figure class="ex" data-g="dog" data-a="0.749"><div class="fr"><div class="mat"><img src="assets/photos/d2.jpg" alt="Xiao Huangdou lying on his back on a wooden floor" loading="lazy"></div></div><figcaption class="lab">His favourite position</figcaption></figure>
+  <figure class="ex" data-g="dog" data-a="0.749"><div class="fr"><div class="mat"><img src="assets/photos/d3.jpg" alt="Xiao Huangdou asleep on his back" loading="lazy"></div></div><figcaption class="lab">Still his favourite position</figcaption></figure>
+  <figure class="ex" data-g="dog" data-a="0.678"><div class="fr"><div class="mat"><img src="assets/photos/bday.jpg" alt="Daniel holding Xiao Huangdou behind a birthday cake shaped like a Shiba" loading="lazy"></div></div><figcaption class="lab">His birthday. The cake is also him.</figcaption></figure>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-left">
-    <div class="hero-tag">Available for collaboration</div>
-    <h1 class="hero-name">Daniel<br><em>Zeyuli</em></h1>
-    <p class="hero-title">Builder &amp; Developer — Toronto</p>
-    <p class="hero-desc">
-      I build things people actually use. From a <strong>Chrome extension</strong> that's shipped to real users, to a <strong>laundry booking system</strong> solving friction at my school — I find problems people don't realize are problems, then automate them away.
-    </p>
-    <div class="hero-cta">
-      <a href="https://chromewebstore.google.com/detail/ilhglkmnbngkjeejpnlgfdkikmcafedd" target="_blank" class="btn btn-primary">
-        ↗ View Extension
-      </a>
-      <a href="mailto:daniel.zeyuli@gmail.com" class="btn btn-ghost">
-        Get in touch
-      </a>
+  <figure class="ex" data-a="1.333"><div class="fr"><div class="mat"><img src="assets/wall/w16.jpg" alt="Daniel and Xiao Huangdou outside at night" loading="lazy"></div></div><figcaption class="lab">The two of us</figcaption></figure>
+
+  <figure class="ex" data-g="ext" data-a="1.6"><div class="fr"><div class="mat"><img src="assets/shots/ext1.jpg" alt="AI Chat Exporter: the Export button under an AI reply" loading="lazy"></div></div><figcaption class="lab">AI Chat Exporter: Export, under every AI reply</figcaption></figure>
+  <figure class="ex" data-g="ext" data-a="1.6"><div class="fr"><div class="mat">
+    <svg viewBox="0 0 400 250" role="img" aria-label="Weekly users grew from about 100 in May to over 1,000 in November 2026">
+      <rect width="400" height="250" fill="#f6efe2"/>
+      <g stroke="#d9cdb8" stroke-width="1"><line x1="44" y1="196" x2="372" y2="196"/><line x1="44" y1="122" x2="372" y2="122"/><line x1="44" y1="48" x2="372" y2="48"/></g>
+      <g fill="#7a6a56" font-family="Inter,sans-serif" font-size="11"><text x="38" y="200" text-anchor="end">0</text><text x="38" y="126" text-anchor="end">500</text><text x="38" y="52" text-anchor="end">1k</text>
+        <text x="44" y="218">May</text><text x="276" y="218" text-anchor="middle">Sep</text><text x="314" y="218" text-anchor="middle">Oct</text><text x="362" y="218" text-anchor="middle">Nov</text></g>
+      <polygon points="44,181 276,78 314,56 362,48 362,196 44,196" fill="#c9772a" fill-opacity=".16"/>
+      <polyline points="44,181 276,78 314,56 362,48" fill="none" stroke="#b5651d" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+      <g fill="#b5651d"><circle cx="44" cy="181" r="3.5"/><circle cx="276" cy="78" r="3.5"/><circle cx="314" cy="56" r="3.5"/><circle cx="362" cy="48" r="5"/></g>
+      <g fill="#2a1c12" font-family="Inter,sans-serif" font-size="12" font-weight="600"><text x="50" y="172">~100</text><text x="268" y="70" text-anchor="end">~800</text><text x="312" y="76" text-anchor="middle">944</text><text x="368" y="36" text-anchor="end">1,000+</text></g>
+    </svg></div></div><figcaption class="lab">Weekly users, May to November 2026</figcaption></figure>
+  <figure class="ex" data-g="ext" data-a="1.6"><div class="fr"><div class="mat"><img src="assets/shots/ext2.jpg" alt="AI Chat Exporter: choosing where to export" loading="lazy"></div></div><figcaption class="lab">Docs, Word, Notion, Obsidian, Markdown</figcaption></figure>
+
+  <figure class="ex" data-a="0.75"><div class="fr"><div class="mat"><img src="assets/wall/w15.jpg" alt="Xiao Huangdou in the car, tongue out" loading="lazy"></div></div><figcaption class="lab">Car rides</figcaption></figure>
+  <figure class="ex" data-a="0.75"><div class="fr"><div class="mat"><img src="assets/wall/w13.jpg" alt="Xiao Huangdou" loading="lazy"></div></div><figcaption class="lab">Xiao Huangdou</figcaption></figure>
+
+  <figure class="ex" data-g="laundry" data-a="1.364"><div class="fr"><div class="mat"><img src="assets/shots/laundry.jpg" alt="Rashleigh Laundry: machine status with Start Now and Schedule for Later" loading="lazy"></div></div><figcaption class="lab">Rashleigh Laundry, the booking page</figcaption></figure>
+  <figure class="ex" data-g="laundry" data-a="1.662"><div class="fr"><div class="mat"><img src="assets/shots/laundry2.jpg" alt="Rashleigh Laundry: the day calendar for the washer and dryer" loading="lazy"></div></div><figcaption class="lab">The calendar: who has which machine, and when</figcaption></figure>
+
+  <figure class="ex" data-a="1.333"><div class="fr"><div class="mat"><img src="assets/wall/w3.jpg" alt="Xiao Huangdou" loading="lazy"></div></div><figcaption class="lab">Xiao Huangdou</figcaption></figure>
+
+  <figure class="ex" data-g="teach" data-a="0.79"><div class="fr"><div class="mat"><img src="assets/wall/w9.jpg" alt="Xiao Huangdou" loading="lazy"></div></div><figcaption class="lab">Xiao Huangdou</figcaption></figure>
+  <figure class="ex" data-g="teach" data-a="0.75"><div class="fr"><div class="mat"><img src="assets/wall/w14.jpg" alt="Xiao Huangdou" loading="lazy"></div></div><figcaption class="lab">Xiao Huangdou</figcaption></figure>
+
+  <figure class="ex" data-g="prompt" data-a="1.6"><div class="fr"><div class="mat"><img src="assets/shots/rcigo.jpg" alt="RCI-GO: a closing-time brief for a one-person food truck" loading="lazy"></div></div><figcaption class="lab">RCI-GO, what we built</figcaption></figure>
+  <figure class="ex" data-g="prompt" data-a="0.653"><div class="fr"><div class="mat"><img src="assets/photos/promptathon.jpg" alt="Daniel and a teammate in front of the Promptathon winners screen" loading="lazy"></div></div><figcaption class="lab">3rd place · Nov 2026</figcaption></figure>
+
+  <figure class="ex" data-a="1.333"><div class="fr"><div class="mat"><img src="assets/wall/w7.jpg" alt="Xiao Huangdou" loading="lazy"></div></div><figcaption class="lab">Xiao Huangdou</figcaption></figure>
+  <figure class="ex" data-a="1.333"><div class="fr"><div class="mat"><img src="assets/wall/w2.jpg" alt="Xiao Huangdou" loading="lazy"></div></div><figcaption class="lab">Xiao Huangdou</figcaption></figure>
+
+  <figure class="ex" data-g="away" data-a="0.71"><div class="fr"><div class="mat"><img src="assets/photos/snow.jpg" alt="Daniel in snowboard gear holding his board" loading="lazy"></div></div><figcaption class="lab">Snowboard season</figcaption></figure>
+  <figure class="ex" data-g="away" data-a="1.362"><div class="fr"><div class="mat"><img src="assets/photos/piano.jpg" alt="Daniel playing a grand piano on stage" loading="lazy"></div></div><figcaption class="lab">Piano, on stage</figcaption></figure>
+
+  <figure class="ex" data-a="0.75"><div class="fr"><div class="mat"><img src="assets/wall/w11.jpg" alt="Xiao Huangdou being patted" loading="lazy"></div></div><figcaption class="lab">Xiao Huangdou</figcaption></figure>
+  <figure class="ex" data-a="1.333"><div class="fr"><div class="mat"><img src="assets/wall/w5.jpg" alt="Xiao Huangdou getting a chin scratch" loading="lazy"></div></div><figcaption class="lab">Xiao Huangdou</figcaption></figure>
+
+  <figure class="ex win" data-g="end" data-a="1.6" data-s="1.35"><a class="fr" href="more.html" aria-label="Enter part two: the full record, on a small planet"><div class="mat">
+    <div class="sky"><video src="assets/space/stars.mp4" muted loop autoplay playsinline></video><i class="shoot"></i></div>
+    <div class="pl"><img src="assets/seed/bloom.webp" alt="" loading="lazy"></div></div></a><figcaption class="lab"></figcaption></figure>
+
+  <button class="treat" aria-label="Dog treat"></button><button class="treat" aria-label="Dog treat"></button><button class="treat" aria-label="Dog treat"></button><button class="treat" aria-label="Dog treat"></button><button class="treat" aria-label="Dog treat"></button>
+  <canvas id="dog" aria-label="Xiao Huangdou the Shiba. Click him."></canvas>
+  <div class="bubble" id="bubble">nope. lying down.</div>
+
+  <div class="hud" id="hud"><span>Daniel Zeyuli</span><span class="hudr"><a class="p2" href="more.html">Part two →</a><span class="treats" id="treats">Treats 0/5</span></span></div>
+
+  <section class="card" data-g="dog" data-act="lie"><p class="eyebrow">Xiao Huangdou · Shiba Inu</p><h2>He rarely barks. Mostly he lies down.</h2><p>His name means "little yellow bean". Scroll and he walks. Stop and he shows you his favourite thing to do. Click him anywhere on the walk and he does it again.</p></section>
+  <section class="card" data-g="ext" data-act="fetch"><p class="eyebrow">AI Chat Exporter · Chrome extension</p><p class="big"><span data-m="weeklyUsers"></span></p><h2>people use it every week.</h2>
+    <p>A teacher's equations broke every time she pasted them from ChatGPT into a document. Now it is one click.</p>
+    <a class="btn" href="https://chromewebstore.google.com/detail/ilhglkmnbngkjeejpnlgfdkikmcafedd" target="_blank" rel="noopener">See it on the Chrome Web Store</a></section>
+  <section class="card" data-g="laundry" data-act="sit"><p class="eyebrow">Residence laundry booking</p><p class="big"><span data-m="laundryFrom"></span>→<span data-m="laundryTo"></span><small>min</small></p><h2>to sort out one load of laundry.</h2>
+    <p>Thirty of us shared two machines by guessing. I built a QR-code booking page that shows which one is free.</p></section>
+  <section class="card" data-g="teach" data-act="sit"><p class="eyebrow">Teaching</p><h2>A Grade 9 class with no coding experience built their own games.</h2>
+    <p>I ran the AI Club at my school. The point was learning to use AI well.</p></section>
+  <section class="card" data-g="prompt" data-act="sit"><p class="eyebrow">Nov 2026</p><p class="big">3<small>rd</small></p><h2>RCIG × OpenAI Student Collective Promptathon.</h2><p>Our team built RCI-GO for a one-person food truck: it turns the day's sales tally into three sentences and one thing to prep for tomorrow.</p><a class="btn" href="https://stellular-zabaione-65aa7f.netlify.app/" target="_blank" rel="noopener">Open RCI-GO</a></section>
+  <section class="card" data-g="away" data-act="sit"><p class="eyebrow">Away from the screen</p><h2>Snowboarding is the sport I keep going back to.</h2>
+    <p>Also piano (ABRSM Grade 8), museums and musicals, and building things by hand. Once it was a sculpture from a few hundred hand-cut pieces of cardboard.</p></section>
+  <section class="card end" data-g="end" data-act="lie"><p class="eyebrow">Part two</p><h2>The full record, on a small planet.</h2><p>Every project, number and award, told as one seed growing. A different page, built from scratch.</p>
+    <a class="btn go" href="more.html">Enter part two →</a>
+    <div class="links"><a href="mailto:daniel.zeyuli@gmail.com">daniel.zeyuli@gmail.com</a><a href="https://github.com/daniel-zeyuli" target="_blank" rel="noopener">GitHub</a><a href="https://www.linkedin.com/in/daniel-zeyuli" target="_blank" rel="noopener">LinkedIn</a></div>
+    <p id="unlock" style="margin:10px 0 0"><small>Find all five treats to see more of Xiao Huangdou.</small></p>
+    <div class="pols" id="pols">
+      <figure><img src="assets/photos/p1.jpg" alt="Xiao Huangdou" loading="lazy"></figure>
+      <figure><img src="assets/photos/p2.jpg" alt="Xiao Huangdou" loading="lazy"></figure>
+      <figure><img src="assets/photos/p3.jpg" alt="Xiao Huangdou" loading="lazy"></figure>
+      <figure><img src="assets/photos/p4.jpg" alt="Xiao Huangdou" loading="lazy"></figure>
+    </div></section>
+  <button class="nav prev" id="prev" type="button" aria-label="Previous exhibit">‹</button><button class="nav next" id="next" type="button" aria-label="Next exhibit">›</button>
+
+  <header class="hero" id="hero">
+    <img id="heroimg" src="assets/photos/hero.jpg" alt="Daniel Zeyuli at dusk, holding a glowing paper lantern">
+    <div class="scrim"></div>
+    <div class="txt" id="herotxt">
+      <p class="eyebrow">Toronto · Rotman Commerce, University of Toronto</p>
+      <h1>Daniel Zeyuli</h1>
+      <p class="lead">I notice the small things that slow people down, and I build the fix.</p>
+      <p class="bio">I built AI Chat Exporter, which <span data-m="weeklyUsers"></span> people use every week, and a laundry booking system for the 30 people I lived with. I study Commerce at Rotman and teach people how to use AI well. Away from the screen: snowboarding, piano, and a Shiba named Xiao Huangdou.</p>
     </div>
-  </div>
-
-  <div class="hero-right">
-    <div class="stats-card">
-      <div class="stat-row">
-        <div>
-          <div class="stat-label">Total Installs</div>
-          <div class="stat-sub">Chrome Web Store · All time</div>
-        </div>
-        <div>
-          <div class="stat-value green" id="m-installs">264</div>
-        </div>
-      </div>
-      <div class="stat-row">
-        <div>
-          <div class="stat-label">Weekly Users</div>
-          <div class="stat-sub">7-day rolling average</div>
-        </div>
-        <div>
-          <div class="stat-value" id="m-wau">155</div>
-        </div>
-      </div>
-      <div class="stat-row">
-        <div>
-          <div class="stat-label">WAU Growth (30d)</div>
-          <div class="stat-sub">vs previous 30-day period</div>
-        </div>
-        <div>
-          <div class="stat-value orange" id="m-retention">+9%</div>
-        </div>
-      </div>
-      <div class="stat-updated">Last updated: <span id="m-last-updated">May 19, 2026</span></div>
-    </div>
-  </div>
-</div>
-
-<!-- PROJECTS -->
-<section id="projects">
-  <div class="section-header">
-    <span class="section-num">01</span>
-    <h2 class="section-title">Things I've <em>shipped</em></h2>
-  </div>
-
-  <div class="projects-grid">
-    <div class="project-card" data-index="01">
-      <span class="project-tag">Chrome Extension · Live</span>
-      <h3 class="project-name">ChatGPT to Google Docs<br><span style="font-size:0.75em; color: var(--muted);">Export Gemini & Claude</span></h3>
-      <p class="project-desc">
-        One-click export from ChatGPT, Claude, and Gemini to Google Docs. Preserves equations, tables, code blocks, and formatting — no copy-paste cleanup. Iterated through 4 versions in under 3 weeks based on real user feedback.
-      </p>
-      <div class="project-meta">
-        <span class="meta-chip">Chrome Extension MV3</span>
-        <span class="meta-chip">Google Drive API</span>
-        <span class="meta-chip" id="m-chip-installs">1,640 installs</span>
-      </div>
-      <a href="https://chromewebstore.google.com/detail/ilhglkmnbngkjeejpnlgfdkikmcafedd" target="_blank" class="project-link">
-        View on Chrome Web Store →
-      </a>
-    </div>
-
-    <div class="project-card" data-index="02">
-      <span class="project-tag">Web App · Deployed</span>
-      <h3 class="project-name">Laundry Booking<br>System</h3>
-      <p class="project-desc">
-        Frictionless laundry room scheduling for boarding school dorms. Eliminates time conflicts and anonymous machine occupancy — a problem students lived with for years without realizing it was solvable.
-      </p>
-      <div class="project-meta">
-        <span class="meta-chip">Full-stack</span>
-        <span class="meta-chip">Real users</span>
-        <span class="meta-chip">School deployment</span>
-      </div>
-      <a href="/laundry-demo/" class="project-link">
-        Try demo — no sign-in →
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- CURRENTLY -->
-<section id="currently" style="padding-top: 0; border-top: none;">
-  <div class="section-header">
-    <span class="section-num">02</span>
-    <h2 class="section-title"><em>Currently</em></h2>
-  </div>
-  <div class="currently-grid">
-    <div class="current-item">
-      <div class="current-label">Studying</div>
-      <div class="current-value">Commerce @ Rotman</div>
-      <div class="current-sub">University of Toronto · Year 1</div>
-    </div>
-    <div class="current-item">
-      <div class="current-label">Building</div>
-      <div class="current-value">AI Workflow Automation</div>
-      <div class="current-sub">N8N · LLM integrations · Browser extensions</div>
-    </div>
-    <div class="current-item">
-      <div class="current-label">Exploring</div>
-      <div class="current-value">IoT + Software bridges</div>
-      <div class="current-sub">Raspberry Pi · Sensors · Physical automation</div>
-    </div>
-  </div>
-</section>
-
-<!-- THINKING -->
-<div class="thinking-section" id="thinking">
-  <div class="section-header">
-    <span class="section-num">04</span>
-    <h2 class="section-title">How I <em>think</em></h2>
-  </div>
-
-  <div class="essay">
-    <div class="essay-meta">
-      <div class="essay-date">May 2026</div>
-      <h3 class="essay-title">I think I notice problems more now</h3>
-      <span class="essay-tag">Origin Story</span>
-      <div style="margin-top: 24px; padding: 16px; border: 1px solid var(--border); border-radius: 2px;">
-        <div style="font-size: 10px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;">As featured in</div>
-        <div style="font-size: 13px; color: var(--text); line-height: 1.5;">Lakefield College School<br><span style="color: var(--muted); font-size: 12px;">AI in Action series · 2026</span></div>
-      </div>
-    </div>
-    <div class="essay-body">
-      <p>
-        Both of my projects started the same way: I noticed friction that everyone around me had quietly accepted as just the way things are.
-      </p>
-      <p>
-        The laundry app came from a familiar boarding school situation. Students in residence had no way to know whether a machine was free, who was using it, or when a load would finish. Clothes would appear outside machines mid-cycle with no explanation. Nobody was being malicious — there was just no system. <strong>"I noticed there was an existing problem in our residence. The laundry was always busy, and you didn't know whose clothes were in the machine. I felt like there was something that needed to be fixed."</strong>
-      </p>
-      <p>
-        I built a reservation app. Students could book time and see machine status in real time. The friction disappeared. And something shifted in how I saw problems. <em>"During the process, I learned a lot, and I helped people. It felt like an all-win situation."</em>
-      </p>
-
-      <div class="essay-pullquote">
-        <p>"After I finished that project, I thought — this is so useful. I created something I never thought possible."</p>
-      </div>
-
-      <p>
-        The Chrome extension came from a teacher. Ms. Nichols, our Math and CS department head, was frustrated: every time she copied equations from ChatGPT or Claude into Google Docs, the formatting broke. She was paying for a tool to handle this. I looked at what she was paying for and thought it seemed like something I could build.
-      </p>
-      <p>
-        The first version took about ten hours — not just asking AI to write code, but understanding why formulas were breaking in the first place. <strong>"Every language model has a different way of outputting math equations. I had to identify the format, test what worked, and then keep improving it."</strong> The extension is now on version 4, supporting equations, chemical formulas, images, charts, and full conversation exports across ChatGPT, Claude, and Gemini. 1,640 installs. 944 weekly users.
-      </p>
-      <p>
-        Both projects taught me the same thing: <em>"Before, I might think there isn't a solution, so I'll just go to someone else. Now I think there must be a solution, and I can find it."</em> The problems worth solving aren't the ones people complain about. They're the ones people have stopped complaining about — because they've forgotten a better version is possible.
-      </p>
-    </div>
-  </div>
-</div>
-
-<!-- SKILLS -->
-<section id="skills">
-  <div class="section-header">
-    <span class="section-num">05</span>
-    <h2 class="section-title">My <em>stack</em></h2>
-  </div>
-  <div class="skills-grid">
-    <div class="skill-block">
-      <div class="skill-category">Extension Dev</div>
-      <div class="skill-items">
-        <span class="skill-item">Chrome MV3</span>
-        <span class="skill-item">Google Drive API</span>
-        <span class="skill-item">OAuth 2.0</span>
-        <span class="skill-item">Content Scripts</span>
-        <span class="skill-item">Service Workers</span>
-      </div>
-    </div>
-    <div class="skill-block">
-      <div class="skill-category">AI-Assisted Building</div>
-      <div class="skill-items">
-        <span class="skill-item">LLM APIs</span>
-        <span class="skill-item">N8N Automation</span>
-        <span class="skill-item">Vibe Coding</span>
-        <span class="skill-item">Prompt Engineering</span>
-        <span class="skill-item">Rapid Iteration</span>
-      </div>
-    </div>
-    <div class="skill-block">
-      <div class="skill-category">Web & Tools</div>
-      <div class="skill-items">
-        <span class="skill-item">JavaScript</span>
-        <span class="skill-item">HTML / CSS</span>
-        <span class="skill-item">Git / GitHub</span>
-        <span class="skill-item">Full-stack Web</span>
-        <span class="skill-item">IoT (learning)</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<div class="contact-section" id="contact">
-  <div class="contact-left">
-    <h2 class="contact-title">Let's<br>build<br><em>together.</em></h2>
-    <p class="contact-desc">
-      Always open to interesting projects, collaborations, and conversations with people who build things. If you spotted a problem nobody's solved yet — I want to hear about it.
-    </p>
-  </div>
-  <div class="contact-right">
-    <a href="mailto:daniel.zeyuli@gmail.com" class="contact-link">
-      <div>
-        <div class="contact-link-label">Email</div>
-        <div class="contact-link-value">daniel.zeyuli@gmail.com</div>
-      </div>
-      <span class="contact-link-arrow">→</span>
-    </a>
-    <a href="https://github.com/daniel-zeyuli" target="_blank" class="contact-link">
-      <div>
-        <div class="contact-link-label">GitHub</div>
-        <div class="contact-link-value">github.com/daniel-zeyuli</div>
-      </div>
-      <span class="contact-link-arrow">→</span>
-    </a>
-    <a href="https://www.linkedin.com/in/daniel-zeyuli" target="_blank" class="contact-link">
-      <div>
-        <div class="contact-link-label">LinkedIn</div>
-        <div class="contact-link-value">linkedin.com/in/daniel-zeyuli</div>
-      </div>
-      <span class="contact-link-arrow">→</span>
-    </a>
-    <a href="https://chromewebstore.google.com/detail/ilhglkmnbngkjeejpnlgfdkikmcafedd" target="_blank" class="contact-link">
-      <div>
-        <div class="contact-link-label">Chrome Extension</div>
-        <div class="contact-link-value">Save AI Chats to Google Docs</div>
-      </div>
-      <span class="contact-link-arrow">→</span>
-    </a>
-  </div>
-</div>
-
-<footer>
-  <span class="footer-text">© 2026 Daniel Zeyuli. Built from scratch.</span>
-  <div class="footer-status">
-    <div class="status-dot"></div>
-    <span>Open to collaboration</span>
-  </div>
-</footer>
+    <div class="go" id="herogo">Swipe, scroll, or press → to take him for a walk</div>
+    <div class="veil" id="veil"></div>
+  </header>
+</div></div>
 
 <script>
-  document.getElementById('m-installs').textContent      = METRICS.totalInstalls;
-  document.getElementById('m-wau').textContent           = METRICS.weeklyActiveUsers;
-  document.getElementById('m-retention').textContent     = METRICS.wauGrowth;
-  document.getElementById('m-last-updated').textContent  = METRICS.lastUpdated;
-  document.getElementById('m-chip-installs').textContent = METRICS.totalInstalls + ' installs';
-</script>
+const $ = id => document.getElementById(id);
+const stage = $('stage'), track = $('track'), cv = $('dog'), ctx = cv.getContext('2d'), bubble = $('bubble');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const ease = x => { x = clamp(x); return x * x * (3 - 2 * x); };
+document.querySelectorAll('[data-m]').forEach(el => el.textContent = METRICS[el.dataset.m]);
 
+// ---- the walk, measured in "slots": one slot = the distance between two neighbouring exhibits
+const exs = [...document.querySelectorAll('.ex')].map(el => ({ el, g: el.dataset.g || null, a: +el.dataset.a, fr: el.querySelector('.fr'), mat: el.querySelector('.mat'), lab: el.querySelector('.lab'), k: +el.dataset.s || 1, u: 0, w: 0, h: 0 }));
+const groups = {};
+exs.forEach((e, i) => { const p = exs[i - 1]; e.u = i ? p.u + (e.g && e.g === p.g ? 1 : e.g && p.g ? 1.5 : 1.25) : 0;
+  if (e.g){ const G = groups[e.g] || (groups[e.g] = { u0: e.u, u1: e.u }); G.u1 = e.u; } });
+const L = exs[exs.length - 1].u;
+const cards = [...document.querySelectorAll('.card')].map(el => ({ el, G: groups[el.dataset.g], act: el.dataset.act }));
+const SNOW_AT = groups.away.u0 - 1.3;
+track.style.height = `calc(${Math.round(L * 62)}vh + 190vh)`;
+const treats = [...document.querySelectorAll('.treat')];
+const lone = exs.filter(e => !e.g).map(e => e.u + .3);
+treats.forEach((t, i) => { t.u = lone[[0, 1, 3, 4, 6][i]]; });
+
+// ---- Xiao Huangdou
+const SHEETS = { walk:{frames:60,w:572,h:404,cols:10,k:1}, lie:{frames:60,w:620,h:388,cols:10,k:1.04}, fetch:{frames:60,w:718,h:364,cols:10,k:1.1},
+                 sit:{frames:60,w:548,h:422,cols:10,k:1.02}, rest:{frames:60,w:592,h:294,cols:10,k:1.04} };
+for (const [n, s] of Object.entries(SHEETS)){ s.img = new Image(); s.img.src = 'assets/dog/' + n + '.webp'; }
+const PAD = 18;                                     // room under the paws for the shadow, in sprite px
+let W = 0, H = 0, small = false, dogX = 0, dpr = 1, ds = 1, cw = 0, ch = 0, floorY = 0, fx = 0, cy = 0, slot = 0;
+
+// Background clips: each is played twice, half a loop apart, and the second copy covers the first one's loop point.
+const bgs = [...document.querySelectorAll('.bg')], pairs = bgs.map(b => [...b.querySelectorAll('video')]);
+function seams(){ for (const [a, b] of pairs){ const D = a.duration; if (!D || !b.duration) continue;
+  const o = 1 - ease((Math.min(a.currentTime, D - a.currentTime) - .25) / .8); b.style.opacity = o.toFixed(3);
+  if (o === 0){ const want = (a.currentTime + D / 2) % D, off = Math.abs(b.currentTime - want); if (Math.min(off, D - off) > .3) b.currentTime = want; } } }
+
+function resize(){
+  W = stage.clientWidth; H = stage.clientHeight; small = W < 760; dpr = Math.min(devicePixelRatio || 1, 2);
+  floorY = 112 * Math.max(W / 1280, H / 724) * 1.06;   // where the deck sits in the 1280x724 clip (scaled 1.06, anchored bottom)
+  dogX = W * (small ? .5 : .3); fx = W * (small ? .5 : .68); cy = H * (small ? .25 : .4); slot = W * (small ? .86 : .36);
+  ds = H * (small ? .2 : .3) / 393; cw = 810 * ds; ch = (465 + PAD) * ds; cv.style.width = cw + 'px'; cv.style.height = ch + 'px'; cv.width = cw * dpr; cv.height = ch * dpr;
+  cv.style.left = (dogX - cw / 2) + 'px'; cv.style.bottom = (floorY - (39 + PAD) * ds) + 'px';
+  bubble.style.left = (dogX + 60 * ds) + 'px'; bubble.style.bottom = (floorY + 380 * ds) + 'px';
+  const maxH = H * (small ? .27 : .42), maxW = W * (small ? .74 : .4);
+  for (const e of exs){ const ih = Math.min(maxH, maxW / e.a) * e.k, iw = ih * e.a; e.mat.style.width = (iw + 28) + 'px'; e.mat.style.height = (ih + 28) + 'px'; e.w = iw + 54; e.h = ih + 54; e.el.style.transformOrigin = `${e.w / 2}px ${e.h / 2}px`; }
+}
+
+let got = 0;
+treats.forEach(t => {
+  t.innerHTML = '<img src="assets/treat.png" alt="" width="76" height="76">';
+  t.addEventListener('click', () => { if (t.classList.contains('got')) return; t.classList.add('got'); got++; $('treats').textContent = `Treats ${got}/5`;
+    if (got === 5){ $('unlock').innerHTML = '<small>All five. He approves. Here is more of him.</small>';
+      $('pols').classList.add('all'); [1, 4, 6, 8, 10, 12, 17].forEach(n => { const f = document.createElement('figure'); f.innerHTML = `<img src="assets/wall/w${n}.jpg" alt="Xiao Huangdou">`; $('pols').appendChild(f); }); } });
+});
+
+const qs = new URLSearchParams(location.search), dbg = qs.get('p'), hdbg = qs.get('h');   // ?p=0..1 pins the walk, ?h=0..1 pins the opening (for screenshots)
+let target = 0, P = 0, heroK = 0, distPx = 0, dir = 1, lastMove = -1e9, action = 'sit', frame = 0, forced = null, lastT = 0, held = false;
+function readScroll(){
+  if (dbg !== null || hdbg !== null){ heroK = hdbg !== null ? clamp(+hdbg) : 1; target = clamp(+dbg || 0) * L; return; }
+  const heroPx = innerHeight * .9, max = document.documentElement.scrollHeight - innerHeight - heroPx;
+  heroK = clamp(scrollY / heroPx); target = max > 0 ? clamp((scrollY - heroPx) / max) * L : 0;
+}
+// Walking is sideways, so sideways input drives it: arrow keys and the ‹ › buttons go one exhibit at a time, a horizontal swipe or trackpad scroll moves freely.
+function yFor(u){ const heroPx = innerHeight * .9; return heroPx + u / L * (document.documentElement.scrollHeight - innerHeight - heroPx); }
+function step(way){
+  if (way > 0 && heroK < 1) return scrollTo({ top: yFor(0), behavior: 'smooth' });
+  const u = way > 0 ? exs.map(e => e.u).find(x => x > target + .05) : exs.map(e => e.u).reverse().find(x => x < target - .05);
+  if (u !== undefined) scrollTo({ top: yFor(u), behavior: 'smooth' }); else if (way < 0) scrollTo({ top: 0, behavior: 'smooth' });
+}
+$('next').addEventListener('click', () => step(1)); $('prev').addEventListener('click', () => step(-1));
+addEventListener('keydown', e => { if (e.key === 'ArrowRight'){ e.preventDefault(); step(1); } else if (e.key === 'ArrowLeft'){ e.preventDefault(); step(-1); } });
+addEventListener('wheel', e => { if (Math.abs(e.deltaX) > Math.abs(e.deltaY)){ e.preventDefault(); scrollBy(0, e.deltaX); } }, { passive: false });
+let tx = 0, ty = 0;
+stage.addEventListener('touchstart', e => { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+stage.addEventListener('touchmove', e => { const x = e.touches[0].clientX, y = e.touches[0].clientY; if (Math.abs(x - tx) > Math.abs(y - ty)){ e.preventDefault(); scrollBy(0, (tx - x) * 2); } tx = x; ty = y; }, { passive: false });
+function zone(){ for (const c of cards) if (P > c.G.u0 - .4 && P < c.G.u1 + .4) return c.act; return null; }
+function setAction(a){ if (action !== a){ action = a; frame = 0; held = false; } }
+cv.addEventListener('click', () => { forced = 'lie'; action = ''; setAction('lie'); bubble.style.opacity = 1; setTimeout(() => bubble.style.opacity = 0, 1800); });
+
+function tick(t){
+  const dt = Math.min(.05, (t - lastT) / 1000 || 0); lastT = t;
+  const prev = P; P += (target - P) * .14; if (Math.abs(target - P) < .0004) P = target;
+  const v = (P - prev) * slot, sn = ease((P - SNOW_AT) / .9);
+  if (Math.abs(v) > .35){ lastMove = t; forced = null; dir = v > 0 ? 1 : -1; distPx += Math.abs(v); setAction('walk'); frame = Math.floor(distPx / (H * .0095)) % SHEETS.walk.frames; }
+  else if (t - lastMove > 170){
+    const want = forced || zone();
+    if (want){
+      // lie → rest (lifts his head once) → stays down. No loop.
+      if (!(action === want || (want === 'lie' && action === 'rest'))) setAction(want);
+      const S = SHEETS[action];
+      if (!held){ frame += dt * 12; if (frame >= S.frames - 1){ if (action === 'lie') setAction('rest'); else { frame = S.frames - 1; held = true; } } }
+    } else { setAction('sit'); frame = 0; }
+  }
+  // opening
+  const hero = $('hero'), ho = 1 - ease((heroK - .55) / .45);   // the photo sinks into the dark first, then the veranda comes up out of it
+  hero.style.opacity = ho.toFixed(3); hero.style.visibility = ho > 0 ? 'visible' : 'hidden';
+  if (ho > 0){ $('heroimg').style.transform = `scale(${(1 + .1 * heroK).toFixed(4)})`; const to = 1 - ease(heroK / .45);
+    $('herotxt').style.opacity = $('herogo').style.opacity = to.toFixed(3); $('herotxt').style.marginTop = (-40 * heroK).toFixed(1) + 'px'; $('veil').style.opacity = ease((heroK - .12) / .43).toFixed(3); }
+  $('hud').style.opacity = ease((heroK - .7) / .3).toFixed(3); $('hud').style.pointerEvents = heroK > .85 ? 'auto' : 'none';
+  const showPrev = heroK >= 1 && P > .05, showNext = P < L - .02; $('prev').style.opacity = showPrev ? 1 : 0; $('prev').style.pointerEvents = showPrev ? 'auto' : 'none'; $('next').style.opacity = showNext ? 1 : 0; $('next').style.pointerEvents = showNext ? 'auto' : 'none';
+  // background
+  $('bgwinter').style.opacity = sn.toFixed(3); seams();
+  for (const b of bgs) b.style.transform = `translate3d(${((.5 - P / L) * 2.5).toFixed(3)}%,0,0) scale(1.06)`;
+  // the wall: an exhibit is largest and brightest at the focus point, and shrinks and dims with distance from it
+  for (const e of exs){
+    const d = e.u - P, sx = fx + d * slot;
+    if (d > 2.2 || d < -.75){ e.el.style.visibility = 'hidden'; continue; }
+    const k = 1 - ease(Math.abs(d)), sc = reduce ? 1 : .5 + .5 * k, op = reduce ? k : d < 0 ? 1 - ease(-d / .42) : 1;
+    e.el.style.visibility = 'visible'; e.el.style.opacity = op.toFixed(3); e.el.style.zIndex = k > .5 ? 2 : 1;
+    e.el.style.transform = `translate3d(${(sx - e.w / 2).toFixed(1)}px,${(cy - e.h / 2).toFixed(1)}px,0) scale(${sc.toFixed(4)})`;
+    e.fr.style.setProperty('--dimk', ((1 - k) * .55).toFixed(3)); e.lab.style.opacity = ease((k - .6) / .3).toFixed(3);
+  }
+  for (const c of cards){ const o = clamp(1 - (Math.max(c.G.u0 - P, P - c.G.u1) - .5) / .2); c.el.style.opacity = o.toFixed(3); c.el.style.pointerEvents = o > .5 ? 'auto' : 'none'; c.el.style.transform = `translateY(${(1 - o) * 14}px)`; }
+  for (const tr of treats) tr.style.transform = `translate3d(${(dogX + (tr.u - P) * slot).toFixed(1)}px,${(-floorY + 26).toFixed(1)}px,0)`;
+  // dog, with a soft contact shadow on the deck
+  const S = SHEETS[action], f = Math.floor(clamp(frame, 0, 1e9)) % S.frames, dw = S.w * ds * S.k, dh = S.h * ds * S.k, feet = ch - PAD * ds;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, cw, ch);
+  if (S.img.complete && S.img.naturalWidth){
+    const sx = (f % S.cols) * S.w, sy = Math.floor(f / S.cols) * S.h;
+    ctx.save(); if (action === 'walk' && dir < 0){ ctx.translate(cw, 0); ctx.scale(-1, 1); }
+    ctx.save(); ctx.translate(cw / 2 + 14 * ds, feet - 8 * ds); ctx.scale(1, .1); const g = ctx.createRadialGradient(0, 0, 0, 0, 0, 250 * ds);
+    g.addColorStop(0, 'rgba(0,0,0,.62)'); g.addColorStop(.6, 'rgba(0,0,0,.3)'); g.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = g; ctx.beginPath(); ctx.arc(0, 0, 250 * ds, 0, 6.3); ctx.fill(); ctx.restore();
+    ctx.drawImage(S.img, sx, sy, S.w, S.h, (cw - dw) / 2, feet - dh, dw, dh); ctx.restore();
+  }
+  requestAnimationFrame(tick);
+}
+addEventListener('scroll', readScroll, { passive: true });
+addEventListener('resize', () => { resize(); readScroll(); });
+resize(); readScroll(); P = target; requestAnimationFrame(tick);
+</script>
 </body>
 </html>
